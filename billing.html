@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاشتراكات والفواتير</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="./assets/js/main.js" defer></script>
+</head>
+<body class="bg-gray-100 text-gray-800">
+    <!-- Header -->
+    <header class="bg-white shadow-md fixed w-full z-10">
+        <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+            <div class="flex items-center space-x-4">
+                <!-- <span class="text-xl font-bold text-primary">
+                    <img src="./assets/images/logo.png" class="w-20 h-30 mb-4" alt="شعار موثوق">
+                </span> -->
+                <input type="text" placeholder="بحث..." class="border rounded-lg px-3 py-1 focus:outline-none focus:ring-2 focus:ring-primary-light">
+            </div>
+            <div class="flex items-center space-x-4">
+                <div class="relative">
+                    <button class="relative">
+                        <i data-lucide="bell" class="w-6 h-6"></i>
+                        <span class="absolute top-0 right-0 bg-red-500 text-white text-xs rounded-full px-1">3</span>
+                    </button>
+                </div>
+                <div class="relative mx-4">
+                    <img src="/assets/images/avatar.png" alt="Profile" class="w-8 h-8 rounded-full">
+                    <div class="absolute hidden bg-white shadow-md rounded-lg mt-2">
+                        <a href="#" class="block px-4 py-2">الملف الشخصي</a>
+                        <a href="#" class="block px-4 py-2">تسجيل الخروج</a>
+                    </div>
+                </div>
+                <button id="dark-mode-toggle" class="focus:outline-none">
+                    <i data-lucide="moon" class="w-6 h-6"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Sidebar -->
+    <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
+        <nav class="mt-16">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> لوحة التحكم</a></li>
+                <li><a href="parents.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> أولياء الأمور</a></li>
+                <li><a href="rfqs.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="file-text" class="w-5 h-5"></i> طلبات وعروض الأسعار</a></li>
+                <li><a href="suppliers.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="truck" class="w-5 h-5"></i> الموردون</a></li>
+                <li><a href="billing.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="credit-card" class="w-5 h-5"></i> الاشتراكات والفواتير</a></li>
+                <li><a href="notifications.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="bell" class="w-5 h-5"></i> الإشعارات</a></li>
+                <li><a href="reports.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="bar-chart" class="w-5 h-5"></i> التقارير</a></li>
+                <li><a href="team.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> الفريق والصلاحيات</a></li>
+                <li><a href="settings.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="settings" class="w-5 h-5"></i> الإعدادات</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="mr-64 pt-16">
+        <div class="container mx-auto px-4 space-y-8">
+            <!-- Filter & Search -->
+            <section class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg">
+                <h3 class="text-lg font-bold text-gray-700 mb-4">البحث وتصنيف الاشتراكات</h3>
+                <div class="flex items-center space-x-4">
+                    <input type="text" id="school-search" placeholder="ابحث عن مدرسة" class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light w-full">
+                    <select id="subscription-status" class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light">
+                        <option value="">كل الحالات</option>
+                        <option value="active">نشط</option>
+                        <option value="expired">منتهي</option>
+                        <option value="near-expiry">قريب الانتهاء</option>
+                    </select>
+                </div>
+            </section>
+
+            <!-- Subscriptions & Invoices Table -->
+            <section class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg">
+                <h3 class="text-lg font-bold text-gray-700 mb-4">الاشتراكات والفواتير</h3>
+                <table class="w-full text-right border-collapse">
+                    <thead>
+                        <tr class="bg-gray-100">
+                            <th class="px-4 py-2">اسم المدرسة</th>
+                            <th class="px-4 py-2">نوع الاشتراك</th>
+                            <th class="px-4 py-2">تاريخ البداية</th>
+                            <th class="px-4 py-2">تاريخ الانتهاء</th>
+                            <th class="px-4 py-2">الحالة</th>
+                            <th class="px-4 py-2">الإجراءات</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">مدرسة الأمل</td>
+                            <td class="px-4 py-2">سنوي</td>
+                            <td class="px-4 py-2">2025-01-01</td>
+                            <td class="px-4 py-2">2025-12-31</td>
+                            <td class="px-4 py-2 text-green-500">نشط</td>
+                            <td class="px-4 py-2">
+                                <button class="bg-primary text-white px-3 py-1 rounded">تجديد</button>
+                            </td>
+                        </tr>
+                        <tr class="hover:bg-gray-50">
+                            <td class="px-4 py-2">مدرسة النور</td>
+                            <td class="px-4 py-2">شهري</td>
+                            <td class="px-4 py-2">2025-07-01</td>
+                            <td class="px-4 py-2">2025-07-31</td>
+                            <td class="px-4 py-2 text-red-500">منتهي</td>
+                            <td class="px-4 py-2">
+                                <button class="bg-primary text-white px-3 py-1 rounded">تجديد</button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <!-- Renew Subscription Modal -->
+            <section id="renew-subscription-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+                <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+                    <h3 class="text-lg font-bold text-gray-700 mb-4">تأكيد تجديد الاشتراك</h3>
+                    <p class="text-gray-600 mb-4">هل أنت متأكد أنك تريد تجديد الاشتراك لهذه المدرسة؟</p>
+                    <div class="flex justify-end space-x-4">
+                        <button type="button" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">إلغاء</button>
+                        <button type="button" class="bg-primary text-white px-4 py-2 rounded">تأكيد</button>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Notifications / Toast Placeholder -->
+            <!-- Placeholder for dynamic JS to show success toast on renewal confirmation -->
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+        document.getElementById('dark-mode-toggle').addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+        });
+    </script>
+</body>
+</html>

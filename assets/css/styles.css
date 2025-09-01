@@ -1,0 +1,86 @@
+/* Custom CSS for Mothooq School Admin Dashboard */
+
+/* Primary color palette */
+:root {
+    --primary-color: #0ab3d4;
+    --primary-light: #3bc9e1;
+    --primary-dark: #0892a8;
+}
+.bg-primary {
+    background-color: var(--primary-color) !important;
+}   
+/* General styles */
+body {
+    font-family: 'Cairo', sans-serif;
+    direction: rtl;
+}
+
+/* Utility classes */
+.rounded {
+    border-radius: 0.5rem;
+}
+
+.shadow {
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.hover-shadow:hover {
+    box-shadow: 0 6px 8px rgba(0, 0, 0, 0.15);
+}
+
+/* Glass effect */
+.glass {
+    background: rgba(255, 255, 255, 0.2);
+    backdrop-filter: blur(10px);
+}
+
+/* Responsive tweaks */
+@media (max-width: 768px) {
+    .table-scroll {
+        overflow-x: auto;
+    }
+}
+
+/* RTL adjustments */
+.table-rtl th, .table-rtl td {
+    text-align: right;
+}
+
+/* Buttons */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.btn-primary:hover {
+    background-color: var(--primary-dark);
+}
+
+.btn-secondary {
+    background-color: #f3f4f6;
+    color: #374151;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    transition: background-color 0.3s;
+}
+
+.btn-secondary:hover {
+    background-color: #e5e7eb;
+}
+
+/* Forms */
+input, select, textarea {
+    border: 1px solid #e5e7eb;
+    padding: 0.5rem;
+    border-radius: 0.5rem;
+    transition: border-color 0.3s;
+}
+
+input:focus, select:focus, textarea:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
