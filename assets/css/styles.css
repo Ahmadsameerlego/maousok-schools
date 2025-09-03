@@ -84,3 +84,78 @@ input:focus, select:focus, textarea:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--primary-light);
 }
+
+/* Responsive styles for the dashboard */
+
+/* Sidebar styles */
+#sidebar {
+    transition: transform 0.3s ease-in-out;
+    transform: translateX(-100%);
+}
+
+/* Hide sidebar on small screens */
+@media (max-width: 768px) {
+    #sidebar {
+        transform: translateX(-100%);
+        position: fixed;
+        top: 0;
+        bottom: 0;
+        z-index: 50;
+        width: 250px;
+        background-color: white;
+        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    }
+
+    #sidebar.open {
+        transform: translateX(0);
+    }
+
+    #sidebar-toggle {
+        display: block;
+    }
+}
+
+/* Adjust main content width when sidebar is hidden */
+main {
+    transition: margin-right 0.3s ease-in-out;
+}
+
+@media (max-width: 768px) {
+    main {
+        margin-right: 0;
+    }
+
+    #sidebar.open + main {
+        margin-right: 250px; /* Adjust based on sidebar width */
+    }
+}
+
+/* Ensure content adjusts when sidebar is hidden */
+@media (max-width: 768px) {
+    main {
+        margin-right: 0;
+    }
+}
+
+/* General responsive tweaks */
+@media (max-width: 1024px) {
+    .table-scroll {
+        overflow-x: auto;
+    }
+
+    .grid-cols-3 {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .hidden-on-mobile {
+        display: none;
+    }
+
+
+}

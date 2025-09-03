@@ -84,3 +84,47 @@ input:focus, select:focus, textarea:focus {
     outline: none;
     box-shadow: 0 0 0 2px var(--primary-light);
 }
+
+
+
+@media (max-width: 768px) {
+    .grid-cols-2 {
+        grid-template-columns: 1fr;
+    }
+
+    .hidden-on-mobile {
+        display: none;
+    }
+
+        main{
+        margin: 0 !important;
+    }
+    aside{
+        transform: translateX(100%);
+        transition: .3s all;
+    }
+    aside.hidden{
+        transform: translate(0) !important;
+        display: block !important;
+    }
+    header .container.mx-auto.px-4{
+        margin-right: 38px;
+        justify-content: center !important;
+    }
+    .logo img{display: none;}
+    #profile-dropdown-menu{left: -30px !important;}
+}
+
+.logo img{
+    object-fit: cover !important;
+    width: 120px;
+    height: 30px;
+
+}
+#profile-dropdown-menu{
+    width: 150px !important;
+}
+
+section:has(table){
+    overflow-x: auto;
+}   

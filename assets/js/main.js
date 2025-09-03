@@ -103,13 +103,25 @@ window.addEventListener('DOMContentLoaded', () => {
 // Main JavaScript for Mothooq School Admin Dashboard
 
 // Sidebar toggle for mobile
-const sidebarToggle = document.getElementById('sidebar-toggle');
-const sidebar = document.getElementById('sidebar');
-if (sidebarToggle) {
-    sidebarToggle.addEventListener('click', () => {
-        sidebar.classList.toggle('hidden');
-    });
-}
+// const sidebarToggle = document.getElementById('sidebar-toggle');
+// const sidebar = document.getElementById('sidebar');
+// if (sidebarToggle) {
+//     sidebarToggle.addEventListener('click', () => {
+//         sidebar.classList.toggle('hidden');
+//     });
+// }
+
+// // Sidebar toggle functionality for small screens
+// if (sidebarToggle && sidebar) {
+//     sidebarToggle.addEventListener('click', () => {
+//         sidebar.classList.toggle('open');
+//         if (sidebar.classList.contains('open')) {
+//             sidebarToggle.textContent = '✕'; // Change to X when open
+//         } else {
+//             sidebarToggle.textContent = '☰'; // Change to menu icon when closed
+//         }
+//     });
+// }
 
 // Modal handling
 function openModal(modalId) {
