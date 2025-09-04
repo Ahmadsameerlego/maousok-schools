@@ -46,12 +46,23 @@
             </div>
         </div>
     </header>
-    <!-- Sidebar -->
-    <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
+   <!-- Sidebar -->
+     <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
         <nav class="mt-16">
             <ul class="space-y-4">
                 <li><a href="dashboard.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> لوحة التحكم</a></li>
-                <li><a href="parents.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> أولياء الأمور</a></li>
+               <li><a href="parents.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> أولياء الأمور</a></li>
+                <li>
+                    <div class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer" id="parents-menu-toggle">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span class="ml-2">الطلبات</span>
+                        <i data-lucide="chevron-down" class="ml-auto w-4 h-4"></i>
+                    </div>
+                    <ul id="parents-submenu" class="ml-6 mt-2 space-y-2 hidden">
+                        <li><a href="sent-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المرسلة</a></li>
+                        <li><a href="received-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المستلمة</a></li>
+                    </ul>
+                </li>
                 <li><a href="rfqs.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="file-text" class="w-5 h-5"></i> طلبات وعروض الأسعار</a></li>
                 <li><a href="suppliers.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="truck" class="w-5 h-5"></i> الموردون</a></li>
                 <li><a href="billing.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="credit-card" class="w-5 h-5"></i> الاشتراكات والفواتير</a></li>
@@ -63,6 +74,7 @@
         </nav>
     </aside>
 
+
     <!-- Toggle Button for Sidebar -->
     <button id="sidebar-toggle" class="fixed top-3 right-4 z-50 bg-primary text-white p-2 rounded shadow md:hidden transition-transform duration-300">
         ☰
@@ -71,38 +83,126 @@
     <!-- Main Content -->
     <main class="mr-64 pt-16">
         <div class="container mx-auto px-4 space-y-8">
-            <!-- Create New RFQ Form -->
-            <section class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg">
-                <h3 class="text-lg font-bold text-gray-700 mb-4">إنشاء طلب عرض أسعار جديد</h3>
-                <form id="new-rfq-form" class="space-y-4">
-                    <div>
-                        <label for="rfq-title" class="block text-gray-700">عنوان الطلب</label>
-                        <input type="text" id="rfq-title" class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                    </div>
-                    <div>
-                        <label for="due-date" class="block text-gray-700">تاريخ الاستحقاق</label>
-                        <input type="date" id="due-date" class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                    </div>
-                    <div>
-                        <label for="notes" class="block text-gray-700">ملاحظات</label>
-                        <textarea id="notes" class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light"></textarea>
-                    </div>
-                    <div id="items-list" class="space-y-4">
-                        <div class="flex items-center space-x-4">
-                            <input type="text" placeholder="المنتج" class="border rounded-lg px-3 py-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                            <input type="number" placeholder="الكمية" class="border rounded-lg px-3 py-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                            <input type="text" placeholder="وحدة القياس" class="border rounded-lg px-3 py-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                            <input type="number" placeholder="السعر التقديري" class="border rounded-lg px-3 py-2 w-1/4 focus:outline-none focus:ring-2 focus:ring-primary-light" required>
-                            <button type="button" class="bg-red-500 text-white px-3 py-2 rounded">حذف</button>
-                        </div>
-                    </div>
-                    <button type="button" id="add-item" class="bg-blue-500 text-white px-4 py-2 rounded">إضافة منتج</button>
-                    <div class="flex justify-end space-x-4">
-                        <button type="reset" class="bg-gray-300 text-gray-700 px-4 py-2 rounded">إلغاء</button>
-                        <button type="submit" class="bg-blue-500 text-white px-4 py-2 rounded">إنشاء</button>
-                    </div>
-                </form>
-            </section>
+           <!-- Create New RFQ Form -->
+<!-- Create New RFQ Form -->
+<section class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg">
+  <h3 class="text-lg font-bold text-gray-700 mb-4 text-right">
+    إنشاء طلب عرض أسعار جديد
+  </h3>
+
+  <form id="new-rfq-form" class="space-y-4 text-right">
+    <!-- عنوان الطلب -->
+    <div>
+      <label for="rfq-title" class="block text-gray-700 mb-1">عنوان الطلب</label>
+      <input
+        type="text"
+        id="rfq-title"
+        class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light"
+        required
+      />
+    </div>
+
+    <!-- تاريخ -->
+    <div>
+      <label for="due-date" class="block text-gray-700 mb-1">تاريخ</label>
+      <input
+        type="date"
+        id="due-date"
+        class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light"
+        required
+      />
+    </div>
+
+    <!-- زر إضافة منتج -->
+    <div class="flex justify-end">
+      <button
+        type="button"
+        id="add-item"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        إضافة منتج
+      </button>
+    </div>
+
+    <!-- جدول المنتجات -->
+    <div id="items-list" class="space-y-2">
+      <div class="grid grid-cols-4 gap-2 items-center">
+        <!-- المنتج -->
+        <input
+          type="text"
+          placeholder="المنتج"
+          class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light"
+        />
+        <!-- الكمية -->
+        <input
+          type="number"
+          placeholder="الكمية"
+          class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light"
+        />
+        <!-- التصنيف -->
+        <select
+          class="border rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-primary-light"
+          required
+        >
+          <option value="">اختر التصنيف</option>
+          <option value="electronics">إلكترونيات</option>
+          <option value="furniture">أثاث</option>
+          <option value="clothing">ملابس</option>
+          <option value="food">مواد غذائية</option>
+          <option value="other">أخرى</option>
+        </select>
+        <!-- أزرار التحكم -->
+        <div class="flex space-x-2 justify-center">
+          <button
+            type="button"
+            class="bg-red-500 text-white px-3 py-1 rounded"
+          >
+            حذف
+          </button>
+          <button
+            type="button"
+            class="bg-blue-600 text-white px-3 py-1 rounded"
+          >
+            تعديل
+          </button>
+          <button
+            type="button"
+            class="bg-green-500 text-white px-3 py-1 rounded"
+          >
+            حفظ
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- ملاحظات -->
+    <div>
+      <label for="notes" class="block text-gray-700 mb-1">ملاحظات</label>
+      <textarea
+        id="notes"
+        class="border rounded-lg px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light"
+      ></textarea>
+    </div>
+
+    <!-- أزرار إلغاء/إنشاء -->
+    <div class="flex justify-end space-x-2">
+      <button
+        type="reset"
+        class="bg-gray-300 text-gray-700 px-4 py-2 rounded"
+      >
+        إلغاء
+      </button>
+      <button
+        type="submit"
+        class="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        إنشاء
+      </button>
+    </div>
+  </form>
+</section>
+
+
 
             <!-- RFQs Table -->
             <section class="bg-white shadow-md rounded-lg p-4 hover:shadow-lg">
@@ -193,7 +293,7 @@
         </div>
     </main>
 
-   <script>
+<script>
         lucide.createIcons();
         document.getElementById('dark-mode-toggle').addEventListener('click', () => {
             document.documentElement.classList.toggle('dark');
@@ -213,6 +313,16 @@
 
         profileDropdownToggle.addEventListener('click', () => {
             profileDropdownMenu.classList.toggle('hidden');
+        });
+
+        // Untrusted parent modal functionality
+        
+        // Parents submenu toggle functionality
+        const parentsMenuToggle = document.getElementById('parents-menu-toggle');
+        const parentsSubmenu = document.getElementById('parents-submenu');
+
+        parentsMenuToggle.addEventListener('click', () => {
+            parentsSubmenu.classList.toggle('hidden');
         });
     </script>
 </body>

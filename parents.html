@@ -48,11 +48,22 @@
     </header>
 
     <!-- Sidebar -->
-    <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
+     <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
         <nav class="mt-16">
             <ul class="space-y-4">
                 <li><a href="dashboard.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> لوحة التحكم</a></li>
-                <li><a href="parents.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> أولياء الأمور</a></li>
+               <li><a href="parents.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> أولياء الأمور</a></li>
+                <li>
+                    <div class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer" id="parents-menu-toggle">
+                        <i data-lucide="users" class="w-5 h-5"></i>
+                        <span class="ml-2">الطلبات</span>
+                        <i data-lucide="chevron-down" class="ml-auto w-4 h-4"></i>
+                    </div>
+                    <ul id="parents-submenu" class="ml-6 mt-2 space-y-2 hidden">
+                        <li><a href="sent-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المرسلة</a></li>
+                        <li><a href="received-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المستلمة</a></li>
+                    </ul>
+                </li>
                 <li><a href="rfqs.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="file-text" class="w-5 h-5"></i> طلبات وعروض الأسعار</a></li>
                 <li><a href="suppliers.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="truck" class="w-5 h-5"></i> الموردون</a></li>
                 <li><a href="billing.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="credit-card" class="w-5 h-5"></i> الاشتراكات والفواتير</a></li>
@@ -173,7 +184,6 @@
                         <tr class="bg-gray-100">
                             <th class="px-4 py-2">الاسم</th>
                             <th class="px-4 py-2">الرقم القومي</th>
-                            <th class="px-4 py-2">المدرسة</th>
                             <th class="px-4 py-2">الحالة</th>
                             <th class="px-4 py-2">إجراءات</th>
                         </tr>
@@ -182,19 +192,17 @@
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2">أحمد علي</td>
                             <td class="px-4 py-2">12345678901234</td>
-                            <td class="px-4 py-2">مدرسة الأمل</td>
                             <td class="px-4 py-2 text-green-500">موثوق</td>
-                            <td class="px-4 py-2">
-                                <button class="bg-primary text-white px-3 py-1 rounded">عرض</button>
-                            </td>
+                            <!-- <td class="px-4 py-2">
+                                <button class="bg-primary text-white px-3 py-1 rounded"> الاجراءات </button>
+                            </td> -->
                         </tr>
                         <tr class="hover:bg-gray-50">
                             <td class="px-4 py-2">منى سعيد</td>
                             <td class="px-4 py-2">98765432109876</td>
-                            <td class="px-4 py-2">مدرسة النور</td>
-                            <td class="px-4 py-2 text-yellow-500">متأخر</td>
+                            <td class="px-4 py-2 text-red-500">غير موثوق</td>
                             <td class="px-4 py-2">
-                                <button class="bg-primary text-white px-3 py-1 rounded">عرض</button>
+                                <button class="bg-primary text-white px-3 py-1 rounded action-button"> الاجراءات </button>
                             </td>
                         </tr>
                     </tbody>
@@ -202,6 +210,21 @@
             </section>
         </div>
     </main>
+
+    <!-- Untrusted Parent Modal -->
+    <div id="untrusted-parent-modal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex items-center justify-center hidden">
+        <div class="bg-white rounded-lg shadow-lg p-6 w-1/3">
+            <h3 class="text-lg font-bold text-red-600 mb-4">تحذير: المنصة ستقوم بإرسال استعلام عنك</h3>
+            <p class="text-gray-700 mb-4">الاسم: أحمد علي</p>
+            <p class="text-gray-700 mb-4">الرقم القومي: 12345678901234</p>
+            <p class="text-gray-700 mb-4">الحالة: غير موثوق</p>
+            <div class="flex justify-between mt-4">
+                <button id="download-file" class="bg-primary text-white px-4 py-2 rounded">تحميل الملف</button>
+                <button id="send-inquiry" class="bg-red-500 text-white px-4 py-2 rounded">إرسال استعلام</button>
+            </div>
+            <button id="close-modal" class="absolute top-2 right-2 text-gray-500">✕</button>
+        </div>
+    </div>
 
    <script>
         lucide.createIcons();
@@ -223,6 +246,35 @@
 
         profileDropdownToggle.addEventListener('click', () => {
             profileDropdownMenu.classList.toggle('hidden');
+        });
+
+        // Untrusted parent modal functionality
+        const modal = document.getElementById('untrusted-parent-modal');
+        const closeModal = document.getElementById('close-modal');
+        const sendInquiry = document.getElementById('send-inquiry');
+
+        document.querySelectorAll('.action-button').forEach(button => {
+            button.addEventListener('click', () => {
+                modal.classList.remove('hidden');
+            });
+        });
+
+        closeModal.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+
+        sendInquiry.addEventListener('click', () => {
+            alert('تم إرسال الاستعلام بنجاح');
+            modal.classList.add('hidden');
+        });
+
+
+         // Parents submenu toggle functionality
+        const parentsMenuToggle = document.getElementById('parents-menu-toggle');
+        const parentsSubmenu = document.getElementById('parents-submenu');
+
+        parentsMenuToggle.addEventListener('click', () => {
+            parentsSubmenu.classList.toggle('hidden');
         });
     </script>
 </body>
