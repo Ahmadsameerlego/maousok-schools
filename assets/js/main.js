@@ -196,3 +196,84 @@ if (addItemButton && itemsList) {
 window.addEventListener('DOMContentLoaded', () => {
     console.log('Initialize charts here for dashboard and reports pages.');
 });
+
+// PARENT INQUIRY: JS INIT
+
+// Validate National ID
+const nationalIdInput = document.getElementById('national-id');
+const inquiryButton = document.getElementById('inquiry-button');
+const errorMessage = document.getElementById('error-message');
+
+if (nationalIdInput && inquiryButton) {
+    nationalIdInput.addEventListener('input', () => {
+        const value = nationalIdInput.value;
+        if (/^\d{14}$/.test(value)) {
+            errorMessage.classList.add('hidden');
+            inquiryButton.disabled = false;
+        } else {
+            errorMessage.classList.remove('hidden');
+            errorMessage.textContent = 'الرقم الوطني يجب أن يكون 14 رقمًا.';
+            inquiryButton.disabled = true;
+        }
+    });
+
+    inquiryButton.addEventListener('click', () => {
+        // Show skeleton loader
+        const skeleton = document.getElementById('skeleton-loader');
+        if (skeleton) skeleton.classList.remove('hidden');
+
+        setTimeout(() => {
+            // Redirect to result page with national ID
+            const nationalId = nationalIdInput.value;
+            window.location.href = `parents-result.html?nid=${nationalId}`;
+        }, 600);
+    });
+}
+
+// Determine Parent Status
+function determineParentStatus(nid) {
+    const lastDigit = parseInt(nid.slice(-1), 10);
+    if (lastDigit === 0) return 'موثوق';
+    if (lastDigit === 1) return 'غير موثوق';
+    return 'قيد المعالجة';
+}
+
+// PARENT RESULT: JS INIT
+const urlParams = new URLSearchParams(window.location.search);
+const nid = urlParams.get('nid');
+const resultSection = document.getElementById('result-section');
+
+// if (nid && resultSection) {
+//     const status = determineParentStatus(nid);
+//     resultSection.innerHTML = '';
+
+//     if (status === 'موثوق') {
+//         resultSection.innerHTML = `
+//             <div class='text-center'>
+//                 <h2 class='text-green-500 text-xl font-bold'>موثوق ✅</h2>
+//                 <p>الرقم الوطني: ${nid}</p>
+//                 <p>لا يوجد ديون.</p>
+//                 <button onclick="window.history.back()" class='bg-primary text-white px-4 py-2 rounded'>رجوع</button>
+//             </div>
+//         `;
+//     } else if (status === 'غير موثوق') {
+//         resultSection.innerHTML = `
+//             <div class='text-center'>
+//                 <h2 class='text-red-500 text-xl font-bold'>غير موثوق ⛔</h2>
+//                 <p>الرقم الوطني: ${nid}</p>
+//                 <a href='assets/files/not_trusted_report.pdf' download class='bg-red-500 text-white px-4 py-2 rounded'>تحميل التقرير</a>
+//             </div>
+//         `;
+//     } else {
+//         resultSection.innerHTML = `
+//             <div class='text-center'>
+//                 <h2 class='text-yellow-500 text-xl font-bold'>قيد المعالجة</h2>
+//                 <p>الرقم الوطني: ${nid}</p>
+//                 <button onclick="location.reload()" class='bg-primary text-white px-4 py-2 rounded'>إعادة المحاولة</button>
+//             </div>
+//         `;
+//     }
+// } 
+// else if (!nid) {
+//     window.location.href = 'parents-inquiry.html';
+// }

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>الاستعلام عن ولي الأمر</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+    <script src="./assets/js/main.js" defer></script>
+</head>
+<body class="bg-gray-100 font-cairo">
+    <!-- Sidebar -->
+    <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64">
+        <nav class="mt-16">
+            <ul class="space-y-4">
+                <li><a href="dashboard.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> لوحة التحكم</a></li>
+                <li><a href="parents-inquiry.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> أولياء الأمور</a></li>
+                <li><a href="rfqs.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="file-text" class="w-5 h-5"></i> طلبات وعروض الأسعار</a></li>
+                <li><a href="suppliers.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="truck" class="w-5 h-5"></i> الموردون</a></li>
+                <li><a href="billing.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="credit-card" class="w-5 h-5"></i> الاشتراكات والفواتير</a></li>
+                <li><a href="notifications.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="bell" class="w-5 h-5"></i> الإشعارات</a></li>
+                <li><a href="reports.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="bar-chart" class="w-5 h-5"></i> التقارير</a></li>
+                <li><a href="team.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> الفريق والصلاحيات</a></li>
+                <li><a href="settings.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="settings" class="w-5 h-5"></i> الإعدادات</a></li>
+            </ul>
+        </nav>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="mr-64 pt-16">
+        <header class="bg-white shadow-md fixed w-full z-10">
+            <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+                <h1 class="text-xl font-bold text-primary">الاستعلام عن ولي الأمر</h1>
+            </div>
+        </header>
+        <div class="container mx-auto px-4 pt-20 mt-40">
+            <section class="bg-white shadow-md rounded-lg p-6">
+                <h2 class="text-lg font-bold text-gray-700 mb-4 text-center">ادخل الرقم الوطني</h2>
+                <div class="flex items-center space-x-4 md:flex-col flex-row">
+                    <input type="text" id="national-id" placeholder="ادخل الرقم الوطني" maxlength="14" class="border rounded-lg mb-10 px-3 py-2 w-full focus:outline-none focus:ring-2 focus:ring-primary-light">
+                                    <p id="error-message" class="text-red-500 text-sm mb-5 hidden">الرقم الوطني غير صالح</p>
+
+                    <div class="flex space-x-4  flex-row">
+                        <button id="inquiry-button" class="bg-primary  text-white px-10 py-2 rounded  block mx-4">استعلام</button>
+                        <button id="inquiry-button" class="bg-primary  text-white px-10 py-2 rounded  block ">
+                            <a href="parents.html">
+                                استعراض اولياء الامور
+                            </a>
+                        </button>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+</body>
+</html>

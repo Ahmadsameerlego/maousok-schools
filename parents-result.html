@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html dir="rtl" lang="ar">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>نتيجة الاستعلام - موثوق</title>
+
+  <!-- Tailwind CDN -->
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <!-- Cairo font -->
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <!-- Optional custom styles -->
+  <link rel="stylesheet" href="./assets/css/style.css">
+  <!-- Lucide icons (UMD) -->
+  <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
+  <!-- If you have a global main.js keep it, our inline script below handles this page -->
+  <script src="./assets/js/main.js" defer></script>
+
+  <style>
+    /* quick utility for Cairo font */
+    .font-cairo { font-family: 'Cairo', sans-serif; }
+    /* small toast styles */
+    #toast-container { position: fixed; top: 1rem; left: 50%; transform: translateX(-50%); z-index: 60; }
+  </style>
+</head>
+<body class="bg-gray-100 font-cairo text-gray-800">
+
+  <!-- Sidebar (shared) -->
+  <aside class="bg-white shadow-lg fixed top-0 right-0 h-full w-64 hidden md:block z-20">
+    <nav class="mt-16">
+      <ul class="space-y-1 text-sm">
+        <li><a href="dashboard.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="home" class="w-5 h-5 ml-2"></i> لوحة التحكم</a></li>
+        <!-- Note: all pages should point to parents-inquiry.html now -->
+        <li><a href="parents-inquiry.html" class="flex items-center px-4 py-3 bg-gray-50 text-primary"><i data-lucide="users" class="w-5 h-5 ml-2"></i> أولياء الأمور</a></li>
+        <li><a href="rfqs.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="file-text" class="w-5 h-5 ml-2"></i> طلبات وعروض الأسعار</a></li>
+        <li><a href="suppliers.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="truck" class="w-5 h-5 ml-2"></i> الموردون</a></li>
+        <li><a href="billing.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="credit-card" class="w-5 h-5 ml-2"></i> الاشتراكات والفواتير</a></li>
+        <li><a href="notifications.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="bell" class="w-5 h-5 ml-2"></i> الإشعارات</a></li>
+        <li><a href="reports.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="bar-chart" class="w-5 h-5 ml-2"></i> التقارير</a></li>
+        <li><a href="team.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="users" class="w-5 h-5 ml-2"></i> الفريق والصلاحيات</a></li>
+        <li><a href="settings.html" class="flex items-center px-4 py-3 hover:bg-gray-50"><i data-lucide="settings" class="w-5 h-5 ml-2"></i> الإعدادات</a></li>
+      </ul>
+    </nav>
+  </aside>
+
+  <!-- Mobile sidebar button (simple) -->
+  <div class="md:hidden fixed top-4 right-4 z-30">
+    <button id="mobile-open" class="bg-white p-2 rounded shadow">
+      <i data-lucide="menu" class="w-5 h-5"></i>
+    </button>
+  </div>
+
+  <!-- Mobile off-canvas sidebar -->
+  <div id="mobile-sidebar" class="fixed inset-0 z-40 transform translate-x-full transition-transform md:hidden">
+    <div class="absolute inset-0 bg-black opacity-30" id="mobile-backdrop"></div>
+    <aside class="absolute top-0 right-0 h-full w-72 bg-white shadow-lg p-4 overflow-auto">
+      <button id="mobile-close" class="mb-4"><i data-lucide="x" class="w-5 h-5"></i></button>
+      <nav>
+        <ul class="space-y-2 text-sm">
+          <li><a href="dashboard.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="home" class="w-5 h-5 ml-2"></i> لوحة التحكم</a></li>
+          <li><a href="parents-inquiry.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="users" class="w-5 h-5 ml-2"></i> أولياء الأمور</a></li>
+          <li><a href="rfqs.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="file-text" class="w-5 h-5 ml-2"></i> طلبات وعروض الأسعار</a></li>
+          <li><a href="suppliers.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="truck" class="w-5 h-5 ml-2"></i> الموردون</a></li>
+          <li><a href="billing.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="credit-card" class="w-5 h-5 ml-2"></i> الاشتراكات والفواتير</a></li>
+          <li><a href="notifications.html" class="flex items-center px-2 py-2 hover:bg-gray-50"><i data-lucide="bell" class="w-5 h-5 ml-2"></i> الإشعارات</a></li>
+        </ul>
+      </nav>
+    </aside>
+  </div>
+
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 bg-white shadow z-10">
+    <div class="container mx-auto px-4 py-3 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <img src="./assets/images/logo.png" alt="Mawthoq" class="h-8 ml-2"/>
+        <span class="font-bold text-lg">منصة موثوق</span>
+      </div>
+      <div class="flex items-center space-x-3">
+        <div class="hidden sm:block">
+          <input id="global-search" class="border border-gray-200 rounded p-2 text-sm" placeholder="بحث..." />
+        </div>
+        <button class="p-2 rounded hover:bg-gray-100" title="الإشعارات">
+          <i data-lucide="bell" class="w-5 h-5"></i>
+        </button>
+        <div class="ml-2">
+          <img src="./assets/images/avatar.png" alt="avatar" class="w-8 h-8 rounded-full" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Toast container -->
+  <div id="toast-container" aria-live="polite" class="pointer-events-none"></div>
+
+  <!-- Main content -->
+  <main class="md:mr-64 pt-20">
+
+     <header class=" ">
+            <div class="container mx-auto px-4 py-3 ">
+                <h1 class="text-lg font-bold text-primary">الاستعلام عن ولي الأمر</h1>
+                 <section class="">
+                    <div class="flex items-center space-x-4 ">
+                        <input type="text" id="national-id" placeholder="ادخل الرقم الوطني" maxlength="14" class="border rounded-lgpx-3 py-2  focus:outline-none focus:ring-2 focus:ring-primary-light">
+
+                        <button id="inquiry-button" class="bg-primary  text-white px-2 py-2 rounded  block">استعلام</button>
+                    </div>
+                </section>
+            </div>
+
+            
+        </header>
+
+    <div class="container mx-auto px-4">
+      <section id="result-section" class="bg-white shadow-md rounded-lg p-6 min-h-[280px]">
+        <h2 class="text-center text-lg font-bold text-gray-700 mb-4">نتائج الاستعلام</h2>
+        <table class="w-full border-collapse text-right">
+          <thead>
+            <tr class="bg-gray-100">
+              <th class="px-4 py-2">اسم ولي الأمر</th>
+              <th class="px-4 py-2">الرقم القومي</th>
+              <th class="px-4 py-2">الحالة</th>
+              <th class="px-4 py-2">ملف الاستعلام</th>
+              <th class="px-4 py-2">إجراءات</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-2">أحمد علي</td>
+              <td class="px-4 py-2">12345678901234</td>
+              <td class="px-4 py-2 text-green-500">موثوق </td>
+              <td class="px-4 py-2"></td>
+              <td class="px-4 py-2">
+              
+              </td>
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-2">منى سعيد</td>
+              <td class="px-4 py-2">98765432109876</td>
+              <td class="px-4 py-2 text-red-500">غير موثوق </td>
+              <td class="px-4 py-2">
+                <a href="assets/files/not_trusted_report.pdf" download class="text-blue-500 hover:underline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 11.575C7.86667 11.575 7.74167 11.5542 7.625 11.5125C7.50833 11.4708 7.4 11.4 7.3 11.3L3.7 7.7C3.5 7.5 3.40417 7.26667 3.4125 7C3.42083 6.73333 3.51667 6.5 3.7 6.3C3.9 6.1 4.1375 5.99583 4.4125 5.9875C4.6875 5.97917 4.925 6.075 5.125 6.275L7 8.15V1C7 0.716667 7.09583 0.479167 7.2875 0.2875C7.47917 0.0958333 7.71667 0 8 0C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1V8.15L10.875 6.275C11.075 6.075 11.3125 5.97917 11.5875 5.9875C11.8625 5.99583 12.1 6.1 12.3 6.3C12.4833 6.5 12.5792 6.73333 12.5875 7C12.5958 7.26667 12.5 7.5 12.3 7.7L8.7 11.3C8.6 11.4 8.49167 11.4708 8.375 11.5125C8.25833 11.5542 8.13333 11.575 8 11.575ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V12C0 11.7167 0.0958333 11.4792 0.2875 11.2875C0.479167 11.0958 0.716667 11 1 11C1.28333 11 1.52083 11.0958 1.7125 11.2875C1.90417 11.4792 2 11.7167 2 12V14H14V12C14 11.7167 14.0958 11.4792 14.2875 11.2875C14.4792 11.0958 14.7167 11 15 11C15.2833 11 15.5208 11.0958 15.7125 11.2875C15.9042 11.4792 16 11.7167 16 12V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z" fill="#94A3B8"/>
+</svg>
+
+                </a>
+              </td>
+            <!-- العمود (td) اللي بيفتح المودال -->
+<td class="px-4 py-2 cursor-pointer" id="open-inquiry">
+  <a href="javascript:void(0)" class="text-blue-500 hover:underline flex items-center">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none"
+      xmlns="http://www.w3.org/2000/svg">
+      <path d="M3.62505 12.925L19.025 19.425C19.3584 19.5583 19.675 19.5291 19.975 19.3375C20.275 19.1458 20.425 18.8666 20.425 18.5V5.49997C20.425 5.1333 20.275 4.85414 19.975 4.66247C19.675 4.4708 19.3584 4.44164 19.025 4.57497L3.62505 11.075C3.20838 11.2583 3.00005 11.5666 3.00005 12C3.00005 12.4333 3.20838 12.7416 3.62505 12.925ZM18.425 17L6.57505 12L18.425 6.99997V10.5L12.425 12L18.425 13.5V17Z" fill="#94A3B8"/>
+    </svg>
+  </a>
+</td>
+
+<!-- Modal -->
+<div id="inquiry-modal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+  <div class="bg-white rounded-lg shadow-lg w-full max-w-2xl p-6 relative">
+
+    <!-- Close -->
+    <button id="close-inquiry" class="absolute top-3 left-3 text-gray-400 hover:text-gray-600">
+      ✕
+    </button>
+
+    <h2 class="text-lg font-bold text-gray-700 mb-6 text-right">استعلام عن ولي الأمر</h2>
+
+    <div class="space-y-4 text-right">
+      <!-- الاسم -->
+      <div>
+        <label class="block text-gray-600 mb-1">الاسم</label>
+        <input type="text" readonly value="عيسى أحمد محمود غطاس"
+          class="w-full border rounded-lg px-3 py-2 bg-gray-100" />
+      </div>
+
+      <!-- الرقم الوطني -->
+      <div>
+        <label class="block text-gray-600 mb-1">الرقم الوطني</label>
+        <input type="text" readonly value="1234567890000"
+          class="w-full border rounded-lg px-3 py-2 bg-gray-100 text-blue-600 font-semibold" />
+      </div>
+
+      <!-- ملف الاستعلام -->
+      <div>
+        <label class="block text-gray-600 mb-1">ملف الاستعلام <span class="text-red-500">*</span></label>
+        <div class="flex items-center border rounded-lg px-3 py-2 bg-gray-100 justify-between">
+          <span>عنوان المرفق</span>
+          <span class="text-sm text-gray-500">21/سبتمبر/2025 - 2:41 م</span>
+          <span class="text-red-500 font-bold">PDF</span>
+        </div>
+        <button class="mt-2 text-blue-500 flex items-center">
+          <svg class="mr-1" width="20" height="20" fill="currentColor">
+            <path d="M5 20h14v-2H5m14-9h-4V3H9v6H5l7 7 7-7z"/>
+          </svg>
+          تحميل الملف
+        </button>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="flex justify-end space-x-2 mt-6">
+      <button id="cancel-inquiry" class="bg-gray-300 text-gray-700 px-4 py-2 rounded hover:bg-gray-400">
+        إلغاء
+      </button>
+      <button id="send-inquiry" class="bg-primary text-white px-4 py-2 rounded hover:bg-primary-dark">
+        إرسال
+      </button>
+    </div>
+
+    <p>
+        سيتم إرسال الاستعلام عن ولي الأمر وفقاً للمرفق المقدم. شركة موثوق غير مسؤولة عن أي بيانات أو معلومات غير صحيحة تتعلق بولي الأمر، وتبقى مسؤولية صحة ودقة هذه المعلومات على عاتق مقدمها.
+    </p>
+  </div>
+</div>
+
+<script>
+  const inquiryModal = document.getElementById('inquiry-modal');
+  const openInquiry = document.getElementById('open-inquiry');
+  const closeInquiry = document.getElementById('close-inquiry');
+  const cancelInquiry = document.getElementById('cancel-inquiry');
+  const sendInquiry = document.getElementById('send-inquiry');
+
+  // فتح المودال
+  openInquiry.addEventListener('click', () => {
+    inquiryModal.classList.remove('hidden');
+    inquiryModal.classList.add('flex');
+  });
+
+  // إغلاق المودال
+  [closeInquiry, cancelInquiry].forEach(btn => {
+    btn.addEventListener('click', () => {
+      inquiryModal.classList.add('hidden');
+    });
+  });
+
+  // إرسال وتحويل لصفحة جديدة
+  sendInquiry.addEventListener('click', () => {
+    window.location.href = "sent-requests.html";
+  });
+</script>
+
+            </tr>
+            <tr class="hover:bg-gray-50">
+              <td class="px-4 py-2">سعيد محمد</td>
+              <td class="px-4 py-2">56789012345678</td>
+              <td class="px-4 py-2 text-yellow-500">قيد المعالجة</td>
+               <td class="px-4 py-2">
+                <a href="assets/files/not_trusted_report.pdf" download class="text-blue-500 hover:underline">
+                    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M8 11.575C7.86667 11.575 7.74167 11.5542 7.625 11.5125C7.50833 11.4708 7.4 11.4 7.3 11.3L3.7 7.7C3.5 7.5 3.40417 7.26667 3.4125 7C3.42083 6.73333 3.51667 6.5 3.7 6.3C3.9 6.1 4.1375 5.99583 4.4125 5.9875C4.6875 5.97917 4.925 6.075 5.125 6.275L7 8.15V1C7 0.716667 7.09583 0.479167 7.2875 0.2875C7.47917 0.0958333 7.71667 0 8 0C8.28333 0 8.52083 0.0958333 8.7125 0.2875C8.90417 0.479167 9 0.716667 9 1V8.15L10.875 6.275C11.075 6.075 11.3125 5.97917 11.5875 5.9875C11.8625 5.99583 12.1 6.1 12.3 6.3C12.4833 6.5 12.5792 6.73333 12.5875 7C12.5958 7.26667 12.5 7.5 12.3 7.7L8.7 11.3C8.6 11.4 8.49167 11.4708 8.375 11.5125C8.25833 11.5542 8.13333 11.575 8 11.575ZM2 16C1.45 16 0.979167 15.8042 0.5875 15.4125C0.195833 15.0208 0 14.55 0 14V12C0 11.7167 0.0958333 11.4792 0.2875 11.2875C0.479167 11.0958 0.716667 11 1 11C1.28333 11 1.52083 11.0958 1.7125 11.2875C1.90417 11.4792 2 11.7167 2 12V14H14V12C14 11.7167 14.0958 11.4792 14.2875 11.2875C14.4792 11.0958 14.7167 11 15 11C15.2833 11 15.5208 11.0958 15.7125 11.2875C15.9042 11.4792 16 11.7167 16 12V14C16 14.55 15.8042 15.0208 15.4125 15.4125C15.0208 15.8042 14.55 16 14 16H2Z" fill="#94A3B8"/>
+</svg>
+
+                </a>
+              </td>
+              <td class="px-4 py-2">
+   
+                <button class="bg-primary text-white px-3 py-1 rounded">إعادة المحاولة</button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </section>
+    </div>
+  </main>
+
+  <!-- Inline script for this page -->
+
+
+  <!-- primary color utilities (tailwind handles most; ensure color classes available in your build) -->
+  <style>
+    /* If you use Tailwind with custom theme, .text-primary/.bg-primary-500 may exist. Otherwise add a small helper: */
+    .text-primary { color: #0ab3d4; }
+    .bg-primary-500 { background-color: #0ab3d4; }
+  </style>
+</body>
+</html>
