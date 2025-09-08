@@ -159,3 +159,8 @@ main {
 
 
 }
+
+
+aside svg, aside i{
+    margin: 0 12px !important;
+}

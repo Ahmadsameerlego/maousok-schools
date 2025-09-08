@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@latest/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./assets/css/style.css">
+        <script src="https://cdn.tailwindcss.com"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/lucide@latest/dist/umd/lucide.min.js"></script>
     <script src="./assets/js/main.js" defer></script>
 </head>
@@ -52,18 +54,9 @@
         <nav class="mt-16">
             <ul class="space-y-4">
                 <li><a href="dashboard.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> لوحة التحكم</a></li>
-               <li><a href="parents-inquiry.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> أولياء الأمور</a></li>
-                <li>
-                    <div class="flex items-center px-4 py-2 hover:bg-gray-100 cursor-pointer" id="parents-menu-toggle">
-                        <i data-lucide="users" class="w-5 h-5"></i>
-                        <span class="ml-2">الطلبات</span>
-                        <i data-lucide="chevron-down" class="ml-auto w-4 h-4"></i>
-                    </div>
-                    <ul id="parents-submenu" class="ml-6 mt-2 space-y-2 hidden">
-                        <li><a href="sent-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المرسلة</a></li>
-                        <li><a href="received-requests.html" class="block px-4 py-2 hover:bg-gray-100">الطلبات المستلمة</a></li>
-                    </ul>
-                </li>
+               <li><a href="parents-inquiry.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="home" class="w-5 h-5"></i> الاستعلام عن ولي الأمر</a></li>
+                               <li><a href="sent-requests.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="users" class="w-5 h-5"></i> الطلبات</a></li>
+
                 <li><a href="rfqs.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="file-text" class="w-5 h-5"></i> طلبات وعروض الأسعار</a></li>
                 <li><a href="suppliers.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="truck" class="w-5 h-5"></i> الموردون</a></li>
                 <li><a href="billing.html" class="flex items-center px-4 py-2 hover:bg-gray-100"><i data-lucide="credit-card" class="w-5 h-5"></i> الاشتراكات والفواتير</a></li>
@@ -135,6 +128,25 @@
                         </tr>
                     </tbody>
                 </table>
+            </section>
+
+
+             <section>
+                <h2 class="text-xl font-bold text-gray-800 mb-4">خدمات إضافية</h2>
+                <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">باقات سوشيال ميديا</h3>
+                        <button class="bg-[#0ab3d4] text-white px-4 py-2 rounded-md hover:opacity-90">اشترك الآن</button>
+                    </div>
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">خدمات تصوير</h3>
+                        <button class="bg-[#0ab3d4] text-white px-4 py-2 rounded-md hover:opacity-90">اطلب الخدمة</button>
+                    </div>
+                    <div class="bg-white shadow-md rounded-xl p-4 flex flex-col items-center">
+                        <h3 class="text-lg font-bold text-gray-800 mb-2">إنشاء متجر إلكتروني</h3>
+                        <button class="bg-[#0ab3d4] text-white px-4 py-2 rounded-md hover:opacity-90">اطلب الخدمة</button>
+                    </div>
+                </div>
             </section>
 
             <!-- Renew Subscription Modal -->
